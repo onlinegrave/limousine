@@ -62,7 +62,6 @@ const Widgets = React.lazy(() => import('./views/components/widgets/Widgets'))
 const Charts = React.lazy(() => import('./views/components/charts/Charts'))
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Settings = React.lazy(() => import('./views/settings/Settings'))
-const Settings = React.lazy(() => import('./views/settings/Settings'))
 
 const OrderAll = React.lazy(() => import('./views/orders/Index'))
 const OrderNew = React.lazy(() => import('./views/orders/New'))
