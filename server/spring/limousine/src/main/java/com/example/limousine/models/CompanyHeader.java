@@ -11,6 +11,10 @@ import javax.persistence.Column;
 @Entity
 @Table(name = "companyheader")
 public class CompanyHeader {
+
+  public CompanyHeader() {
+  }
+
   @Id
   @Column(name = "companyid", nullable = false, unique = true)
   public String companyId;

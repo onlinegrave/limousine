@@ -1,4 +1,4 @@
-package com.example.limousine.models;
+'package com.example.limousine.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,7 +28,7 @@ public class DeviceRequest {
   @Column(name = "userid", nullable = false, length = 20)
   public String userId;
 
-  @Column(name = "actionkey", nullable = false, lenght = 50)
+  @Column(name = "actionkey", nullable = false, length = 50)
   public String actionKey;
 
   @Column(name = "receivetime", nullable = false)

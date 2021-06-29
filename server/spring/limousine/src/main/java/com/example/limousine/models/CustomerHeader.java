@@ -2,7 +2,10 @@ package com.example.limousine.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
+
+import com.example.limousine.models.CustomerHeader.CustomerHeaderId;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,12 +15,20 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
 @Entity
+@IdClass(CustomerHeaderId.class)
 @Table(name = "customerheader")
 public class CustomerHeader {
 
+  public CustomerHeader() {
+  }
+
   @Id
-  @Embedded
-  public CustomerHeaderId customerHeaderId;
+  @Column(name = "customerid", nullable = false, unique = true)
+  public String customerId;
+
+  @Id
+  @Column(name = "companyid", nullable = false)
+  public String companyId;
 
   @Column(name = "customername", nullable = false, length = 100)
   public String customerName;
@@ -55,13 +66,14 @@ public class CustomerHeader {
   @Column(name = "updateddate", columnDefinition = "TIMESTAMP")
   public LocalDateTime updatedDate;
 
-  @Embeddable
-  public class CustomerHeaderId implements Serializable {
+  public static class CustomerHeaderId implements Serializable {
     public static final long serialVersionUID = 1209720831232L;
-    @Column(name = "customerid", nullable = false, unique = true)
+
+    public CustomerHeaderId() {
+    }
+
     public String customerId;
 
-    @Column(name = "companyid", nullable = false)
     public String companyId;
   }
 }

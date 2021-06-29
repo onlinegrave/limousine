@@ -24,7 +24,7 @@ public class ExpenseHeader {
   @Column(name = "orderid")
   public Long orderId;
 
-  @Column(name = "driverid", length = 20
+  @Column(name = "driverid", length = 20)
   public String driverId;
 
   @Column(name = "vehicleid")
@@ -60,4 +60,5 @@ public class ExpenseHeader {
     @Column(name = "expenseid", nullable = false)
     public Long expenseId;
   }
+
 }
