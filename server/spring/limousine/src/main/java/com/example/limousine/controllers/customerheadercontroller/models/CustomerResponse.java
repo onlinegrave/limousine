@@ -1,4 +1,4 @@
-package com.example.limousine.controllers.customercontroller.models;
+package com.example.limousine.controllers.customerheadercontroller.models;
 
 public class CustomerResponse {
   public String companyId;

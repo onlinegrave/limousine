@@ -27,9 +27,9 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.validation.Validator;
 
-// @EnableWebMvc
-// @Configuration
-// @ComponentScan(basePackageClasses = MyWebMvcConfiguration.class)
+@EnableWebMvc
+@Configuration
+@ComponentScan(basePackageClasses = MyWebMvcConfiguration.class)
 public class MyWebMvcConfiguration implements WebMvcConfigurer {
 
   // @Bean
@@ -67,6 +67,7 @@ public class MyWebMvcConfiguration implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**").allowedMethods("PUT", "PATCH", "POST");
   }
 
   @Override
