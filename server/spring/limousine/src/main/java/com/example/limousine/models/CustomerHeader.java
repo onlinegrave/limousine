@@ -72,6 +72,11 @@ public class CustomerHeader {
     public CustomerHeaderId() {
     }
 
+    public CustomerHeaderId(String companyId, String customerId) {
+      this.companyId = companyId;
+      this.customerId = customerId;
+    }
+
     public String customerId;
 
     public String companyId;

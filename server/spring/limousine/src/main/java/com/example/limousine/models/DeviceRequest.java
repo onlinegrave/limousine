@@ -1,4 +1,4 @@
-'package com.example.limousine.models;
+package com.example.limousine.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
