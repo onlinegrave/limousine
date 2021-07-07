@@ -3,9 +3,6 @@ package com.example.limousine.controllers.customerheadercontroller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -42,18 +39,19 @@ public class CustomerHeaderController {
   private CustomerRespository customerRepository;
 
   @GetMapping(value = "customers")
-  // public ResponseEntity<ApiResponse<List<CustomerHeader>>> all() {
-  public ResponseEntity<ApiResponse<Object>> all() {
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    if (principal instanceof UserDetails) {
-      return ResponseEntity.ok()
-          .body(new ApiResponse.Builder<Object>().withData(((UserDetails) principal).toString()).build());
-    }
-    return ResponseEntity.ok().body(new ApiResponse.Builder<Object>()
-        .withData(SecurityContextHolder.getContext().getAuthentication().getDetails()).build());
+  public ResponseEntity<ApiResponse<List<CustomerHeader>>> all() {
+    // public ResponseEntity<ApiResponse<Object>> all() {
+    // Object principal =
+    // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    // if (principal instanceof UserDetails) {
     // return ResponseEntity.ok()
-    // .body(new
-    // ApiResponse.Builder<List<CustomerHeader>>().withData(customerRepository.findAll()).build());
+    // .body(new ApiResponse.Builder<Object>().withData(((UserDetails)
+    // principal).toString()).build());
+    // }
+    // return ResponseEntity.ok().body(new ApiResponse.Builder<Object>()
+    // .withData(SecurityContextHolder.getContext().getAuthentication().getDetails()).build());
+    return ResponseEntity.ok()
+        .body(new ApiResponse.Builder<List<CustomerHeader>>().withData(customerRepository.findAll()).build());
   }
 
   @GetMapping(value = "customers/{customerId}")

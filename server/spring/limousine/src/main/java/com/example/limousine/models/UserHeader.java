@@ -14,13 +14,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 @Entity
 @Table(name = "userheader")
-public class UserHeader implements UserDetails {
+public class UserHeader {
 
   @EmbeddedId
   private UserHeaderId userHeaderId;
@@ -92,40 +88,4 @@ public class UserHeader implements UserDetails {
     @Column(name = "userid", nullable = false, length = 20)
     public String userId;
   }
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Collections.singletonList(new SimpleGrantedAuthority(this.userName));
-  }
-
-  @Override
-  public String getPassword() {
-    return this.password;
-  }
-
-  @Override
-  public String getUsername() {
-    return this.userName;
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return this.expireDate == null;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return this.expireDate == null;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return this.expireDate == null;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return this.expireDate == null;
-  }
-
 }

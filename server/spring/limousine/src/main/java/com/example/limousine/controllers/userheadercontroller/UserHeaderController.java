@@ -71,8 +71,9 @@ public class UserHeaderController {
     UserHeader ch = modelMapper.map(optUserGroup.get(), UserHeader.class);
     userHeaderRepository.save(ch);
     return ResponseEntity.ok().body(new ApiResponse.Builder<UserHeader>().withData(ch).build());
+  }
 
-  @GetMapping(value = "userheaderstest/{userId}}")
+  @GetMapping(value = "userheaderstest/{userId}")
   public ResponseEntity<ApiResponse<UserHeader>> userid(@PathVariable String userId) {
     Optional<UserHeader> customerHeader = userHeaderRepository.findByUserHeaderIdUserId(userId);
     if (!customerHeader.isPresent()) {
