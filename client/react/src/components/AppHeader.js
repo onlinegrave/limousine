@@ -34,7 +34,7 @@ const AppHeader = () => {
           <CIcon name="logo" height="48" alt="Logo" />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink to="/dashboard" component={NavLink} activeClassName="active">
               Dashboard
             </CNavLink>
@@ -98,7 +98,7 @@ const AppHeader = () => {
             <CNavLink to="/option-settings" component={NavLink} activeClassName="active">
               Option Settings
             </CNavLink>
-          </CNavItem>
+          </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav>
           <CNavItem>

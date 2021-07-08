@@ -6,9 +6,9 @@ const AppFooter = () => {
     <CFooter>
       <div>
         <a href="https://mapking.com" target="_blank" rel="noopener noreferrer">
-          CoreUI
+          Mapking
         </a>
-        <span className="ms-1">&copy; {new Date().getFullYear()} Mapking.</span>
+        <span className="ms-1">&copy; {new Date().getFullYear()}</span>
       </div>
       <div className="ms-auto">
         <span className="me-1">Powered by</span>

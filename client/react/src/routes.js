@@ -123,10 +123,9 @@ const OptionSettingShow = React.lazy(() => import('./views/option-settings/Show'
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/profile', name: 'Profile', component: Profile },
+  // { path: '/profile', name: 'Profile', component: Profile },
   { path: '/settings', name: 'Settings', component: Settings },
-  { path: '/notifications', name: 'Notifications', component: Notifications },
-
+  // { path: '/notifications', name: 'Notifications', component: Notifications },
 
   { path: '/orders', name: 'Orders', component: OrderAll },
   { path: '/orders/new', name: 'New order', component: OrderNew },
@@ -154,10 +153,10 @@ const routes = [
   { path: '/users/:id', name: 'Show user', component: UserShow },
   { path: '/users/:id/edit', name: 'Edit user', component: UserEdit },
 
-  { path: '/users-groups', name: 'User groups', component: UserGroupAll },
-  { path: '/users-groups/new', name: 'New user group', component: UserGroupNew },
-  { path: '/users-groups/:id', name: 'Show user group', component: UserGroupShow },
-  { path: '/users-groups/:id/edit', name: 'Edit user group', component: UserGroupEdit },
+  { path: '/user-groups', name: 'User groups', component: UserGroupAll },
+  { path: '/user-groups/new', name: 'New user group', component: UserGroupNew },
+  { path: '/user-groups/:id', name: 'Show user group', component: UserGroupShow },
+  { path: '/user-groups/:id/edit', name: 'Edit user group', component: UserGroupEdit },
 
   { path: '/vehicles', name: 'Vehicles', component: VehicleAll },
   { path: '/vehicles/new', name: 'New vehicle', component: VehicleNew },

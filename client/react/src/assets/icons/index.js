@@ -28,7 +28,8 @@ import {
   cibCcApplePay,
   cibCcAmex,
   cibGoogle,
-  cilBuilding,
+  cibOpenstreetmap,
+  cibMessenger,
 } from '@coreui/icons'
 import { cifUs, cifBr, cifIn, cifFr, cifEs, cifPl } from '@coreui/icons'
 import {
@@ -125,6 +126,9 @@ import {
   cilX,
   cilXCircle,
   cilWarning,
+  cilHistory,
+  cilCarAlt,
+  cilBuilding,
 } from '@coreui/icons'
 
 export const icons = Object.assign(
@@ -229,6 +233,8 @@ export const icons = Object.assign(
     cilX,
     cilXCircle,
     cilWarning,
+    cilHistory,
+    cilCarAlt,
   },
   {
     cifUs,
@@ -264,5 +270,7 @@ export const icons = Object.assign(
     cibCcApplePay,
     cibCcAmex,
     cibGoogle,
+    cibOpenstreetmap,
+    cibMessenger,
   },
 )
