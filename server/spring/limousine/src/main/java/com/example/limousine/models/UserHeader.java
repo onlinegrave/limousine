@@ -71,6 +71,14 @@ public class UserHeader {
     this.userName = username;
   }
 
+  public String getPassword() {
+    return this.password;
+  }
+
+  public UserHeaderId getUserHeaderId() {
+    return this.userHeaderId;
+  }
+
   @Embeddable
   public static class UserHeaderId implements Serializable {
 
@@ -87,5 +95,14 @@ public class UserHeader {
 
     @Column(name = "userid", nullable = false, length = 20)
     public String userId;
+
+    public String getCompanyId() {
+      return this.companyId;
+    }
+
+    public String getUserId() {
+      return this.userId;
+    }
   }
+
 }

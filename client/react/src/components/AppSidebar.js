@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 import {
   CSidebar,
@@ -7,6 +8,9 @@ import {
   CSidebarNav,
   CSidebarToggler,
   CCreateNavItem,
+  CNavItem,
+  CNavLink,
+  CNavbarText,
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
@@ -34,8 +38,9 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <CIcon className="sidebar-brand-full" name="logo-negative" height={35} />
-        <CIcon className="sidebar-brand-narrow" name="sygnet" height={35} />
+        {/* <CIcon className="sidebar-brand-full" name="logo-negative" height={35} /> */}
+        {/* <CIcon className="sidebar-brand-narrow" name="sygnet" height={35} /> */}
+        <CNavbarText className="sidebar-brand-full">Limousine</CNavbarText>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

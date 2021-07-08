@@ -10,6 +10,8 @@ public interface UserHeaderRepository extends JpaRepository<UserHeader, UserHead
 
   Optional<UserHeader> findByUserHeaderIdUserId(String userid);
 
+  Optional<UserHeader> findByUserHeaderIdUserIdAndPassword(String userid, String password);
+
   Optional<UserHeader> findByUserHeaderIdCompanyIdAndUserHeaderIdUserIdAndPassword(String companyId, String userId,
       String password);
 

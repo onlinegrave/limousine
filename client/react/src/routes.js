@@ -61,7 +61,6 @@ const Widgets = React.lazy(() => import('./views/components/widgets/Widgets'))
 
 const Charts = React.lazy(() => import('./views/components/charts/Charts'))
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
-const Settings = React.lazy(() => import('./views/settings/Settings'))
 
 const OrderAll = React.lazy(() => import('./views/orders/Index'))
 const OrderNew = React.lazy(() => import('./views/orders/New'))
@@ -119,6 +118,15 @@ const OptionSettingAll = React.lazy(() => import('./views/option-settings/Index'
 const OptionSettingNew = React.lazy(() => import('./views/option-settings/New'))
 const OptionSettingEdit = React.lazy(() => import('./views/option-settings/Edit'))
 const OptionSettingShow = React.lazy(() => import('./views/option-settings/Show'))
+
+const Updates = React.lazy(() => import('./views/updates/Updates'))
+const Messages = React.lazy(() => import('./views/messages/Messages'))
+const Tasks = React.lazy(() => import('./views/tasks/Tasks'))
+const Comments = React.lazy(() => import('./views/comments/Comments'))
+const Profile = React.lazy(() => import('./views/profile/Profile'))
+const Settings = React.lazy(() => import('./views/settings/Settings'))
+const Payments = React.lazy(() => import('./views/payments/Payments'))
+const Projects = React.lazy(() => import('./views/projects/Projects'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -194,6 +202,15 @@ const routes = [
   { path: '/option-settings/new', name: 'New option settings', component: OptionSettingNew },
   { path: '/option-settings/:id', name: 'Show option settings', component: OptionSettingShow },
   { path: '/option-settings/:id/edit', name: 'Edit option settings', component: OptionSettingEdit },
+
+  { path: '/updates', name: 'Updates', component: Updates },
+  { path: '/messages', name: 'Messages', component: Messages },
+  { path: '/tasks', name: 'Tasks', component: Tasks },
+  { path: '/comments', name: 'Comments', component: Comments },
+  { path: '/profile', name: 'Profile', component: Profile },
+  { path: '/settings', name: 'Settings', component: Settings },
+  { path: '/payments', name: 'Payments', component: Payments },
+  { path: '/projects', name: 'Projects', component: Projects },
 
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },

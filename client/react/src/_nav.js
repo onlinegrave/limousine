@@ -99,7 +99,7 @@ const _nav = [
     _component: 'CNavItem',
     as: NavLink,
     anchor: 'Option Settings',
-    to: '/options-settings',
+    to: '/option-settings',
     icon: <CIcon name="cil-settings" customClasses="nav-icon" />,
   },
   // {
