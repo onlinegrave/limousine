@@ -7,28 +7,26 @@ import javax.persistence.Table;
 
 import com.example.limousine.models.CustomerHeader.CustomerHeaderId;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 
 @Entity
-@IdClass(CustomerHeaderId.class)
 @Table(name = "customerheader")
+@Data
 public class CustomerHeader {
 
   public CustomerHeader() {
   }
 
-  @Id
-  @Column(name = "customerid", nullable = false, unique = true)
-  public String customerId;
-
-  @Id
-  @Column(name = "companyid", nullable = false)
-  public String companyId;
+  @EmbeddedId
+  public CustomerHeaderId customerHeaderId;
 
   @Column(name = "customername", nullable = false, length = 100)
   public String customerName;
@@ -66,6 +64,16 @@ public class CustomerHeader {
   @Column(name = "updateddate", columnDefinition = "TIMESTAMP")
   public LocalDateTime updatedDate;
 
+  public CustomerHeaderId getCustomerHeaderId() {
+    return this.customerHeaderId;
+  }
+
+  public void setCustomerHeaderId(CustomerHeaderId customerHeaderId) {
+    this.customerHeaderId = customerHeaderId;
+  }
+
+  @Embeddable
+  @Data
   public static class CustomerHeaderId implements Serializable {
     public static final long serialVersionUID = 1209720831232L;
 
@@ -77,8 +85,26 @@ public class CustomerHeader {
       this.customerId = customerId;
     }
 
+    @Column(name = "customerid", nullable = false, length = 20)
     public String customerId;
 
+    @Column(name = "companyid", nullable = false, length = 20)
     public String companyId;
+
+    public String getCustomerId() {
+      return this.customerId;
+    }
+
+    public String getCompanyId() {
+      return this.companyId;
+    }
+
+    public void setCustomerId(String customerId) {
+      this.customerId = customerId;
+    }
+
+    public void setCompanyId(String companyId) {
+      this.companyId = companyId;
+    }
   }
 }

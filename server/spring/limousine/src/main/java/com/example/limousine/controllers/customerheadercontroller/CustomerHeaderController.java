@@ -1,6 +1,9 @@
 package com.example.limousine.controllers.customerheadercontroller;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,20 +12,27 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.qos.logback.core.joran.action.Action;
+import lombok.NonNull;
 
+import java.io.StringBufferInputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import com.example.limousine.common.ApiResponse;
 import com.example.limousine.controllers.customerheadercontroller.dto.CustomerHeaderCreateDTO;
+import com.example.limousine.controllers.customerheadercontroller.dto.CustomerHeaderDestroyDTO;
+import com.example.limousine.controllers.customerheadercontroller.dto.CustomerHeaderEditDTO;
+import com.example.limousine.controllers.customerheadercontroller.dto.CustomerHeaderOneDTO;
 import com.example.limousine.controllers.customerheadercontroller.models.CustomerResponse;
 import com.example.limousine.models.CustomerHeader;
 import com.example.limousine.models.CustomerHeader.CustomerHeaderId;
-import com.example.limousine.repositories.CustomerRespository;
+import com.example.limousine.repositories.CustomerHeaderRespository;
+import com.google.gson.Gson;
 
 @RestController
 public class CustomerHeaderController {
@@ -33,68 +43,91 @@ public class CustomerHeaderController {
   // @Autowired
   // public SecurityContextHolder securityContext;
 
-  private static final ModelMapper modelMapper = new ModelMapper();
+  @Autowired
+  private ModelMapper modelMapper;
 
   @Autowired
-  private CustomerRespository customerRepository;
+  private Gson gson;
 
-  @GetMapping(value = "customers")
-  public ResponseEntity<ApiResponse<List<CustomerHeader>>> all() {
-    // public ResponseEntity<ApiResponse<Object>> all() {
-    // Object principal =
-    // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    // if (principal instanceof UserDetails) {
-    // return ResponseEntity.ok()
-    // .body(new ApiResponse.Builder<Object>().withData(((UserDetails)
-    // principal).toString()).build());
-    // }
-    // return ResponseEntity.ok().body(new ApiResponse.Builder<Object>()
-    // .withData(SecurityContextHolder.getContext().getAuthentication().getDetails()).build());
+  @Autowired
+  private CustomerHeaderRespository customerHeaderRepository;
+
+  @GetMapping(value = "customerheaders", params = { "page", "size", "orderBy" })
+  public ResponseEntity<ApiResponse<List<CustomerHeader>>> all(@RequestParam("page") int page,
+      @RequestParam("size") int size, @RequestParam("orderBy") String orderby) {
+        Pageable pageable = PageRequest.of(page, size, direction, properties)
     return ResponseEntity.ok()
-        .body(new ApiResponse.Builder<List<CustomerHeader>>().withData(customerRepository.findAll()).build());
+        .body(new ApiResponse.Builder<List<CustomerHeader>>().withData(customerHeaderRepository.findAll(pageable)).build());
   }
 
-  @GetMapping(value = "customers/{customerId}")
-  public ResponseEntity<ApiResponse<CustomerHeader>> one(@PathVariable String companyId,
-      @PathVariable String customerId) {
-    CustomerHeaderId id = new CustomerHeaderId(companyId, customerId);
-    Optional<CustomerHeader> customerHeader = customerRepository.findById(id);
+  @GetMapping(value = "customerheaders/{customerId}")
+  public ResponseEntity<ApiResponse<CustomerHeader>> one(@PathVariable String customerId,
+      @RequestBody CustomerHeaderOneDTO customerHeaderDto) {
+    final Optional<CustomerHeader> customerHeader = customerHeaderRepository
+        .findByCustomerHeaderIdCompanyIdAndCustomerHeaderIdCustomerId(customerHeaderDto.companyId, customerId);
     if (!customerHeader.isPresent()) {
       return ResponseEntity.ok().body(new ApiResponse.Builder<CustomerHeader>().withError("Not found").build());
     }
     return ResponseEntity.ok().body(new ApiResponse.Builder<CustomerHeader>().withData(customerHeader.get()).build());
   }
 
-  @PostMapping(value = "customers/create")
-  public ResponseEntity<ApiResponse<CustomerHeader>> create(@RequestBody CustomerHeaderCreateDTO customerHeaderDto) {
-    CustomerHeader customerHeader = modelMapper.map(customerHeaderDto, CustomerHeader.class);
-    customerHeader.updatedDate = LocalDateTime.now();
-
-    Optional<CustomerHeader> optCustomerHeader = customerRepository
-        .findById(new CustomerHeaderId(customerHeader.companyId, customerHeader.customerId));
-
-    if (!optCustomerHeader.isPresent()) {
-      return ResponseEntity.ok().body(new ApiResponse.Builder<CustomerHeader>().withError("Not found").build());
-    }
-
+  @PostMapping(value = "customerheaders")
+  public ResponseEntity<Object> create(@RequestBody CustomerHeaderCreateDTO customerHeaderDto) {
+    // modelMapper.addMappings(new PropertyMap<CustomerHeaderCreateDTO,
+    // CustomerHeader>() {
+    // @Override
+    // protected void configure() {
+    // final CustomerHeaderId customerHeaderId = new
+    // CustomerHeaderId(source.getCompanyId(), source.getCustomerId());
+    // destination.setCustomerHeaderId(customerHeaderId);
+    // }
+    // });
+    // modelMapper.addMappings(mapper ->
+    // mapper.map(Source::getCompanyId,Destination::getCompanyHeaderId().getCompanyId()));
+    // modelMapper.addMappings(src -> src.getPerson().getFirstName(), (dest, v) ->
+    // dest.getCustomer().setName(v));
+    // final CustomerHeaderId customerHeaderId = modelMapper.map(customerHeaderDto,
+    // CustomerHeaderId.class);
+    // modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+    // final CustomerHeader customerHeader = modelMapper.map(customerHeaderDto,
+    // CustomerHeader.class);
+    // modelMapper.addMappings(mapper -> mapper.map(src ->
+    // src.getCustomer().getAge(), PersonDTO::setAge));
+    // modelMapper.addMappings(mapper -> mapper.map(src -> src.getCompanyId(),
+    // CustomerHeaderCreateDTO::setStatus));
+    // final CustomerHeaderCreateDTO customerHeader1 =
+    // modelMapper.map(customerHeaderDto, CustomerHeaderCreateDTO.class);
+    final CustomerHeader customerHeader = new CustomerHeader();
     return ResponseEntity.ok().body(new ApiResponse.Builder<CustomerHeader>().withData(customerHeader).build());
+    // customerHeader.updatedDate = LocalDateTime.now();
+
+    // Optional<CustomerHeader> optCustomerHeader = customerHeaderRepository
+    // .findById(customerHeader.getCustomerHeaderId());
+
+    // if (!optCustomerHeader.isPresent()) {
+    // return ResponseEntity.ok().body(new
+    // ApiResponse.Builder<CustomerHeader>().withError("Not found").build());
+    // }
+
+    // return ResponseEntity.ok().body(new
+    // ApiResponse.Builder<CustomerHeader>().withData(customerHeader).build());
   }
 
-  @DeleteMapping(value = "customers/{customerId}")
-  public ResponseEntity<String> destroy(@PathVariable String companyId, @PathVariable String customerId) {
+  @DeleteMapping(value = "customerheaders/{customerId}")
+  public ResponseEntity<String> destroy(@PathVariable String customerId,
+      @RequestBody CustomerHeaderDestroyDTO customerHeaderDto) {
     return ResponseEntity.ok().body(new String("ok"));
   }
 
-  @PatchMapping(value = "customers/{customerId}")
-  public ResponseEntity<ApiResponse<CustomerHeader>> edit(@PathVariable String companyId,
-      @PathVariable String customerId) {
-    final Optional<CustomerHeader> customerHeader = customerRepository
-        .findById(new CustomerHeaderId(companyId, customerId));
+  @PatchMapping(value = "customerheaders/{customerId}")
+  public ResponseEntity<ApiResponse<String>> edit(@PathVariable String customerId,
+      @RequestBody CustomerHeaderEditDTO customerHeaderDto) {
+    final Optional<CustomerHeader> customerHeader = customerHeaderRepository
+        .findById(new CustomerHeaderId(customerHeaderDto.companyId, customerId));
     if (!customerHeader.isPresent()) {
-      return ResponseEntity.ok().body(new ApiResponse.Builder<CustomerHeader>().withError("Not found").build());
+      return ResponseEntity.ok().body(new ApiResponse.Builder<String>().withError("Not found").build());
     }
-    CustomerHeader ch = modelMapper.map(customerHeader.get(), CustomerHeader.class);
-    customerRepository.save(ch);
-    return ResponseEntity.ok().body(new ApiResponse.Builder<CustomerHeader>().withData(ch).build());
+
+    return ResponseEntity.ok().body(new ApiResponse.Builder<String>().withStatusOk().build());
   }
 }

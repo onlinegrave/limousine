@@ -1,40 +1,42 @@
 package com.example.limousine.controllers.customerheadercontroller.dto;
 
-import javax.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NonNull;
 
+@Data
 public class CustomerHeaderCreateDTO {
 
-  @NotNull
+  @NonNull
   public String companyId;
 
-  @NotNull
+  @NonNull
   public String customerId;
 
-  @NotNull
+  @NonNull
   public String customerName;
 
-  @NotNull
+  @NonNull
   public String contactPerson;
 
-  @NotNull
+  @NonNull
   public String contactTel1;
 
-  @NotNull
+  @NonNull
   public String contactTel2;
 
-  @NotNull
+  @NonNull
   public String contactEmail;
 
-  @NotNull
-  public String paymentType;
+  @NonNull
+  public Integer paymentType;
 
-  @NotNull
-  public String discountPercent;
+  @NonNull
+  public Double discountPercent;
 
-  @NotNull
+  @NonNull
   public String remarks;
 
-  @NotNull
+  @NonNull
   public Integer status;
 
 }

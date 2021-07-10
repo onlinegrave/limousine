@@ -7,16 +7,23 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 import com.example.limousine.common.ApiResponse;
 import com.example.limousine.controllers.usergroupcontroller.dto.UserGroupCreateDTO;
@@ -30,16 +37,18 @@ public class UserHeaderController {
   @Autowired
   private UserHeaderRepository userHeaderRepository;
 
-  @GetMapping(value = "userheaders")
-  public ResponseEntity<ApiResponse<List<UserHeader>>> all() {
-    return ResponseEntity.ok()
-        .body(new ApiResponse.Builder<List<UserHeader>>().withData(userHeaderRepository.findAll()).build());
+  @GetMapping(value = "userheaders", params = { "page", "size", "orderBy", "order" })
+  public ResponseEntity<ApiResponse<List<UserHeader>>> all(@RequestParam("page") int page,
+      @RequestParam("size") int size, @RequestParam("orderBy") String orderBy, @RequestParam("order") String order) {
+    Direction direction = order.equalsIgnoreCase("asc") ? Direction.ASC : Direction.DESC;
+    Pageable pageable = PageRequest.of(page, size, direction, orderBy);
+    Page<UserHeader> p = userHeaderRepository.findAll(pageable);
+    return ResponseEntity.ok().body(new ApiResponse.Builder<List<UserHeader>>().withData(p.getContent()).build());
   }
 
   @GetMapping(value = "userheaders/{userId}")
   public ResponseEntity<ApiResponse<UserHeader>> one(@PathVariable String userId) {
-    UserHeaderId id = new UserHeaderId("", userId);
-    Optional<UserHeader> customerHeader = userHeaderRepository.findById(id);
+    Optional<UserHeader> customerHeader = userHeaderRepository.findByUserHeaderIdUserId(userId);
     if (!customerHeader.isPresent()) {
       return ResponseEntity.ok().body(new ApiResponse.Builder<UserHeader>().withError("Not found").build());
     }
@@ -49,7 +58,7 @@ public class UserHeaderController {
   @PostMapping(value = "userheaders/create")
   public ResponseEntity<ApiResponse<UserHeader>> create(@RequestBody UserGroupCreateDTO userGroupCreateDTO) {
     UserHeader userHeader = modelMapper.map(userGroupCreateDTO, UserHeader.class);
-    userHeader.updatedDate = LocalDateTime.now();
+    userHeader.updatedDate = new Date();
     userHeaderRepository.save(userHeader);
     return ResponseEntity.ok().body(new ApiResponse.Builder<UserHeader>().withData(userHeader).build());
   }

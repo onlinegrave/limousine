@@ -5,9 +5,9 @@ import javax.persistence.Id;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -22,13 +22,13 @@ public class UserHeader {
   private UserHeaderId userHeaderId;
 
   @Column(name = "username", nullable = false, length = 100)
-  private String userName;
+  private String username;
 
   @Column(name = "password", nullable = false, length = 20)
   public String password;
 
   @Column(name = "expiredate")
-  public LocalDate expireDate;
+  public Date expireDate;
 
   @Column(name = "groupid", nullable = false, length = 20)
   public String groupId;
@@ -61,14 +61,14 @@ public class UserHeader {
   public String updatedBy;
 
   @Column(name = "updateddate")
-  public LocalDateTime updatedDate;
+  public Date updatedDate;
 
-  public String getUserName() {
-    return this.userName;
+  public String getUsername() {
+    return this.username;
   }
 
-  public void setUserName(String username) {
-    this.userName = username;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getPassword() {

@@ -47,7 +47,7 @@ public class UserPrivilegeController {
   // UserGroupCreateDTO userGroupCreateDTO) {
   // UserPrivilege userGroup = modelMapper.map(userGroupCreateDTO,
   // UserPrivilege.class);
-  // userGroup.updatedDate = LocalDateTime.now();
+  // userGroup.updatedDate = Date.now();
   // userGroupRepository.save(userGroup);
   // return ResponseEntity.ok().body(new
   // ApiResponse.Builder<UserPrivilege>().withData(userGroup).build());
