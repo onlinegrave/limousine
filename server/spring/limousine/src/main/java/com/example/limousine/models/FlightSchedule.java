@@ -1,9 +1,12 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,46 +15,58 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "flightschedule")
+@Data
 public class FlightSchedule {
 
   @Id
   @Embedded
-  public FlightScheduleId flightScheduleId;
+  private FlightScheduleId flightScheduleId;
 
   @Column(name = "airline", nullable = false, length = 100)
-  public String airline;
+  private String airline;
 
   @Column(name = "location", nullable = false, length = 100)
-  public String location;
+  private String location;
 
   @Column(name = "hall", nullable = false, length = 100)
-  public String hall;
+  private String hall;
 
   @Column(name = "status", nullable = false)
-  public String status;
+  private String status;
 
   @Column(name = "lastupdate", nullable = false)
-  public LocalDateTime lastUpdate;
+  private Date lastUpdate;
 
   @Embeddable
-  public class FlightScheduleId implements Serializable {
-    public static final long serialVersionUID = 223372036854987777L;
+  @Data
+  public static class FlightScheduleId implements Serializable {
+    public FlightScheduleId(String airportCode, Integer flightType, String flightNo, Date flightDate, Date flightTime) {
+      this.airportCode = airportCode;
+      this.flightType = flightType;
+      this.flightNo = flightNo;
+      this.flightDate = flightDate;
+      this.flightTime = flightTime;
+
+    }
 
     @Column(name = "airportcode", nullable = false, length = 10)
-    public String airportCode;
+    private String airportCode;
 
     @Column(name = "flighttype", nullable = false)
-    public Integer flightType;
+    private Integer flightType;
 
     @Column(name = "flightno", nullable = false, length = 10)
-    public String flightNo;
+    private String flightNo;
 
     @Column(name = "flightdate", nullable = false)
-    public LocalDate flightDate;
+    private Date flightDate;
 
-    @Column(name = "flighttime", nullable = false)
-    public LocalTime flightTime;
+    @Column(name = "flighttime", nullable = false, columnDefinition = "TIME")
+    private Date flightTime;
   }
 }

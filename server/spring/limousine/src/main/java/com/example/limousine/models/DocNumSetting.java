@@ -1,24 +1,30 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "docnumsetting")
+@Data
 public class DocNumSetting {
 
   @Id
   @Column(name = "companyid", nullable = false, unique = true)
-  public String companyId;
+  private String companyId;
 
   @Column(name = "lastorderid")
-  public Long lastOrderId;
+  private Long lastOrderId;
 
   @Column(name = "lastvehicleid")
-  public Integer lastVehicleId;
+  private Integer lastVehicleId;
 
   @Column(name = "lastposid")
-  public Long lastPosId;
+  private Long lastPosId;
 }

@@ -1,53 +1,59 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "inspectionsetting")
+@Data
 public class InspectionSetting {
 
   @Id
   @Column(name = "companyid", nullable = false, length = 20)
-  public String companyId;
+  private String companyId;
 
   @Column(name = "haslogininspection", nullable = false)
-  public Integer hasLoginInspection;
+  private Integer hasLoginInspection;
 
   @Column(name = "haslogoutinspection", nullable = false)
-  public Integer hasLogoutInspection;
+  private Integer hasLogoutInspection;
 
   @Column(name = "mileage", nullable = false)
-  public Integer mileage;
+  private Integer mileage;
 
   @Column(name = "vehiclebody", nullable = false)
-  public Integer vehicleBody;
+  private Integer vehicleBody;
 
   @Column(name = "windscreenwiper")
-  public Integer windscreenWiper;
+  private Integer windscreenWiper;
   @Column(name = "seatbelt")
-  public Integer seatBelt;
+  private Integer seatBelt;
   @Column(name = "tankwater")
-  public Integer tankwater;
+  private Integer tankwater;
   @Column(name = "engineoil")
-  public Integer engineOil;
+  private Integer engineOil;
   @Column(name = "tirepressure")
-  public Integer tirePressure;
+  private Integer tirePressure;
 
   @Column(name = "lighting")
-  public Integer lighting;
+  private Integer lighting;
 
   @Column(name = "dashboard")
-  public Integer dashboard;
+  private Integer dashboard;
 
   @Column(name = "steeringwheel")
-  public Integer steeringWheel;
+  private Integer steeringWheel;
 
   @Column(name = "aircondition")
-  public Integer airCondition;
+  private Integer airCondition;
 
   @Column(name = "cardoor")
-  public Integer carDoor;
+  private Integer carDoor;
 }

@@ -158,8 +158,8 @@ const routes = [
 
   { path: '/users', name: 'User', component: UserAll },
   { path: '/users/new', name: 'New user', component: UserNew },
-  { path: '/users/:id', name: 'Show user', component: UserShow },
-  { path: '/users/:id/edit', name: 'Edit user', component: UserEdit },
+  { path: '/users/:companyId/:userId', name: 'Show user', component: UserShow },
+  { path: '/users/:companyid/:userId/edit', name: 'Edit user', component: UserEdit },
 
   { path: '/user-groups', name: 'User groups', component: UserGroupAll },
   { path: '/user-groups/new', name: 'New user group', component: UserGroupNew },

@@ -1,5 +1,7 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -9,50 +11,62 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "invoicedetail")
+@Data
 public class InvoiceDetail {
   @Id
   @Embedded
-  public InvoiceDetailId invoiceDetailId;
+  private InvoiceDetailId invoiceDetailId;
 
   @Column(name = "orderid", nullable = false)
-  public Long orderId;
+  private Long orderId;
 
   @Column(name = "ordercharge", nullable = false)
-  public Double orderCharge;
+  private Double orderCharge;
 
   @Column(name = "tollcharge", nullable = false)
-  public Double tollCharge;
+  private Double tollCharge;
 
   @Column(name = "waitcharge", nullable = false)
-  public Double waitCharge;
+  private Double waitCharge;
 
   @Column(name = "stopovercharge", nullable = false)
-  public Double stopOverCharge;
+  private Double stopOverCharge;
 
   @Column(name = "additionchargename", nullable = false, length = 100)
-  public String additionChargeName;
+  private String additionChargeName;
 
   @Column(name = "additioncharge", nullable = false)
-  public Double additionCharge;
+  private Double additionCharge;
 
   @Column(name = "totalamount", nullable = false)
-  public Double totalAmount;
+  private Double totalAmount;
 
   @Column(name = "remarks", nullable = false, length = 1000)
-  public String remarks;
+  private String remarks;
 
   @Embeddable
-  public class InvoiceDetailId implements Serializable {
+  @Data
+  public static class InvoiceDetailId implements Serializable {
     public static final long serialVersionUID = 228726036854772327L;
+
+    public InvoiceDetailId(String companyId, String invoiceId, Integer seqNo) {
+      this.companyId = companyId;
+      this.invoiceId = invoiceId;
+      this.seqNo = seqNo;
+    }
+
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "invoiceid", nullable = false, length = 20)
-    public String invoiceId;
+    private String invoiceId;
 
     @Column(name = "seqno", nullable = false)
-    public Integer seqNo;
+    private Integer seqNo;
   }
 }

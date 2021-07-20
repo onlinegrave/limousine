@@ -1,8 +1,11 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,54 +14,65 @@ import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "invoiceheader")
+@Data
 public class InvoiceHeader {
 
   @Id
   @Embedded
-  public InvoiceHeaderId invoiceHeaderId;
+  private InvoiceHeaderId invoiceHeaderId;
 
   @Column(name = "invoicedate", nullable = false, length = 20)
-  public LocalDate invoiceDate;
+  private LocalDate invoiceDate;
 
   @Column(name = "customerid", nullable = false, length = 20)
-  public String customerId;
+  private String customerId;
 
   @Column(name = "customername", nullable = false, length = 100)
-  public String customerName;
+  private String customerName;
 
   @Column(name = "discountpercent", nullable = false)
-  public Double discountPercent;
+  private Double discountPercent;
 
   @Column(name = "adjustmentname", nullable = false, length = 100)
-  public String adjustmentName;
+  private String adjustmentName;
 
   @Column(name = "adjustmentamount", nullable = false)
-  public Double adjustmentAmount;
+  private Double adjustmentAmount;
 
   @Column(name = "invoiceamount", nullable = false)
-  public Double invoiceAmount;
+  private Double invoiceAmount;
 
   @Column(name = "remarks", nullable = false, length = 1000)
-  public String remarks;
+  private String remarks;
 
   @Column(name = "Status", nullable = false)
-  public Integer status;
+  private Integer status;
 
   @Column(name = "updatedby", length = 20)
-  public String updatedBy;
+  private String updatedBy;
 
   @Column(name = "updateddate")
-  public LocalDateTime updatedDate;
+  private Date updatedDate;
 
   @Embeddable
-  public class InvoiceHeaderId implements Serializable {
+  @Data
+  public static class InvoiceHeaderId implements Serializable {
     public static final long serialVersionUID = 223372036854797627L;
+
+    public InvoiceHeaderId(String companyId, String invoiceId) {
+      this.companyId = companyId;
+      this.invoiceId = invoiceId;
+    }
+
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "invoiceid", nullable = false, length = 20)
-    public String invoiceId;
+    private String invoiceId;
   }
 }

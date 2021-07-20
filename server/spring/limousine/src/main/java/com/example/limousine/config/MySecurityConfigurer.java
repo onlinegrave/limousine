@@ -1,7 +1,7 @@
 package com.example.limousine.config;
 
 import com.example.limousine.filters.JwtFilter;
-import com.example.limousine.services.AppUserDetailService;
+import com.example.limousine.services.UserDetailServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class MySecurityConfigurer extends WebSecurityConfigurerAdapter {
   @Autowired
-  private AppUserDetailService appUserDetailService;
+  private UserDetailServiceImpl userDetailServiceImpl;
 
   @Autowired
   private JwtFilter jwtFilter;
@@ -30,7 +30,7 @@ public class MySecurityConfigurer extends WebSecurityConfigurerAdapter {
   }
 
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(appUserDetailService);
+    auth.userDetailsService(userDetailServiceImpl);
   }
 
   @Bean

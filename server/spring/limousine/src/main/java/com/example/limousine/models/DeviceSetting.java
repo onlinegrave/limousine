@@ -1,46 +1,51 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "devicesetting")
+@Data
 public class DeviceSetting {
 
   @Id
   @Column(name = "companyid", nullable = false, length = 20)
-  public String companyId;
+  private String companyId;
 
   @Column(name = "trackerinterval", nullable = false)
-  public Integer trackerInterval;
+  private Integer trackerInterval;
 
   @Column(name = "trackerstartmode", nullable = false)
-  public Integer trackerStartMode;
+  private Integer trackerStartMode;
 
   @Column(name = "shutdowninterval", nullable = false)
-  public Integer shutDownInterval;
+  private Integer shutDownInterval;
 
   @Column(name = "screensaverinterval", nullable = false)
-  public Integer screenSaverInterval;
+  private Integer screenSaverInterval;
 
   @Column(name = "messengerinterval", nullable = false)
-  public Integer messengerInterval;
+  private Integer messengerInterval;
 
   @Column(name = "checkorderinterval", nullable = false)
-  public Integer checkOrderInterval;
+  private Integer checkOrderInterval;
 
   @Column(name = "bufferinginterval", nullable = false)
-  public Integer bufferingInterval;
+  private Integer bufferingInterval;
 
   @Column(name = "connectmode", nullable = false)
-  public Integer connectMode;
+  private Integer connectMode;
 
   @Column(name = "wifissid", length = 50)
-  public String wifiSsid;
+  private String wifiSsid;
 
   @Column(name = "wifipassword", length = 20)
-  public String wifiPassword;
-
+  private String wifiPassword;
 }

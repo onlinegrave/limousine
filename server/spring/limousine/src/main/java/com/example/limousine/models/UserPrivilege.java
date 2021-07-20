@@ -1,5 +1,7 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,26 +12,36 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "userprivilege")
+@Data
 public class UserPrivilege {
 
   @EmbeddedId
-  public UserPrivilegeId userPrivilegeId;
+  private UserPrivilegeId userPrivilegeId;
 
   @Column(name = "actionid", nullable = false)
-  public Integer actionId;
+  private Integer actionId;
 
   @Embeddable
+  @Data
   public static class UserPrivilegeId implements Serializable {
+    public UserPrivilegeId(String companyId, String groupId, Integer screenId) {
+      this.companyId = companyId;
+      this.groupId = groupId;
+      this.screenId = screenId;
+    }
+
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "groupid", nullable = false, length = 10)
-    public String groupId;
+    private String groupId;
 
     @Column(name = "screenid", nullable = false)
-    public Integer screenId;
+    private Integer screenId;
   }
-
 }

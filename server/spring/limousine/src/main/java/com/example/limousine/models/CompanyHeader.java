@@ -1,15 +1,21 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "companyheader")
+@Data
 public class CompanyHeader {
 
   public CompanyHeader() {
@@ -17,60 +23,60 @@ public class CompanyHeader {
 
   @Id
   @Column(name = "companyid", nullable = false, unique = true)
-  public String companyId;
+  private String companyId;
 
   @Column(name = "companyname", nullable = false)
-  public String companyName;
+  private String companyName;
 
   @Column(name = "companytype", nullable = false)
-  public Integer comapanyType;
+  private Integer comapanyType;
 
   @Column(name = "billingaddress", nullable = false)
-  public String billingAddress;
+  private String billingAddress;
 
   @Column(name = "contactaddress", nullable = false)
-  public String contactAddress;
+  private String contactAddress;
 
   @Column(name = "contactperson1", nullable = false)
-  public String contactPerson1;
+  private String contactPerson1;
 
   @Column(name = "contactperson2", nullable = false)
-  public String contactPerson2;
+  private String contactPerson2;
 
   @Column(name = "contacttelA1", nullable = false)
-  public String contactTelA1;
+  private String contactTelA1;
 
   @Column(name = "contacttelB1", nullable = false)
-  public String contactTelB1;
+  private String contactTelB1;
 
   @Column(name = "contactemail1", nullable = false)
-  public String contactEmail1;
+  private String contactEmail1;
 
   @Column(name = "contactemail2", nullable = false)
-  public String contactEmail2;
+  private String contactEmail2;
 
   @Column(name = "contacttela2", nullable = false)
-  public String contactTelA2;
+  private String contactTelA2;
 
   @Column(name = "contacttelb2", nullable = false)
-  public String contactTelB2;
+  private String contactTelB2;
 
   @Column(name = "companylogo")
-  public String comapnyLogo;
+  private String comapnyLogo;
 
   @Column(name = "standardorderimport", nullable = false)
-  public Integer standardOrderImport;
+  private Integer standardOrderImport;
 
   @Column(name = "remarks", nullable = false, length = 1000)
-  public String remarks;
+  private String remarks;
 
   @Column(name = "status")
-  public Integer status;
+  private Integer status;
 
   @Column(name = "updatedby")
-  public String updatedBy;
+  private String updatedBy;
 
   @Column(name = "updateddate", columnDefinition = "TIMESTAMP")
-  public LocalDateTime updatedDate;
+  private Date updatedDate;
 
 }

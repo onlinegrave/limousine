@@ -10,7 +10,8 @@ import com.example.limousine.models.CustomerHeader.CustomerHeaderId;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -21,56 +22,47 @@ import javax.persistence.EmbeddedId;
 @Table(name = "customerheader")
 @Data
 public class CustomerHeader {
-
   public CustomerHeader() {
   }
 
   @EmbeddedId
-  public CustomerHeaderId customerHeaderId;
+  private CustomerHeaderId customerHeaderId;
 
   @Column(name = "customername", nullable = false, length = 100)
-  public String customerName;
+  private String customerName;
 
   @Column(name = "customertype", nullable = false)
-  public Integer customerType;
+  private Integer customerType;
 
   @Column(name = "contactperson", nullable = false, length = 100)
-  public String contactPerson;
+  private String contactPerson;
 
   @Column(name = "contacttel1", nullable = false, length = 20)
-  public String contactTel1;
+  private String contactTel1;
 
   @Column(name = "contacttel2", nullable = false, length = 20)
-  public String contactTel2;
+  private String contactTel2;
 
   @Column(name = "contactemail", nullable = false, length = 50)
-  public String contactEmail;
+  private String contactEmail;
 
   @Column(name = "paymenttype", nullable = false)
-  public Integer paymentType;
+  private Integer paymentType;
 
   @Column(name = "discountpercent", nullable = false)
-  public Double discountPercent;
+  private Double discountPercent;
 
   @Column(name = "remarks", nullable = false, length = 1000)
-  public String remarks;
+  private String remarks;
 
   @Column(name = "status", nullable = false)
-  public Integer status;
+  private Integer status;
 
   @Column(name = "updatedby")
-  public String updatedBy;
+  private String updatedBy;
 
   @Column(name = "updateddate", columnDefinition = "TIMESTAMP")
-  public LocalDateTime updatedDate;
-
-  public CustomerHeaderId getCustomerHeaderId() {
-    return this.customerHeaderId;
-  }
-
-  public void setCustomerHeaderId(CustomerHeaderId customerHeaderId) {
-    this.customerHeaderId = customerHeaderId;
-  }
+  private Date updatedDate;
 
   @Embeddable
   @Data

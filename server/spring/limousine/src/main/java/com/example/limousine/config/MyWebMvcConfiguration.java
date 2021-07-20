@@ -63,12 +63,12 @@ public class MyWebMvcConfiguration implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**").allowedMethods("PUT", "PATCH", "POST");
+    registry.addMapping("*/**").allowedMethods("GET", "PUT", "PATCH", "PUT", "DELETE", "POST");
   }
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-    // registry.addViewController("/home").setViewName("home");
+    // registry.addViewController("/error").setViewName("home");
     // registry.addViewController("/").setViewName("home");
     // registry.addViewController("/hello").setViewName("hello");
     // registry.addViewController("/login").setViewName("login");

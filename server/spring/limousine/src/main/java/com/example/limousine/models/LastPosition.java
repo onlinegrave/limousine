@@ -1,7 +1,10 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,51 +13,62 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "lastposition")
+@Data
 public class LastPosition {
 
   @Id
   @Embedded
-  public LastPositionId lastPosition;
+  private LastPositionId lastPosition;
 
   @Column(name = "vehicleid", nullable = true)
-  public Integer vehicleId;
+  private Integer vehicleId;
 
   @Column(name = "userid", length = 20)
-  public String userId;
+  private String userId;
 
   @Column(name = "reporttime", nullable = false)
-  public LocalDateTime reportTime;
+  private Date reportTime;
 
   @Column(name = "fixtime")
-  public LocalDateTime fixTime;
+  private Date fixTime;
 
   @Column(name = "latitude", nullable = false)
-  public Double latitude;
+  private Double latitude;
 
   @Column(name = "longitude", nullable = false)
-  public Double longitude;
+  private Double longitude;
 
   @Column(name = "accuracy", nullable = false)
-  public Integer accuracy;
+  private Integer accuracy;
 
   @Column(name = "speed")
-  public Double speed;
+  private Double speed;
 
   @Column(name = "bearing")
-  public Double bearing;
+  private Double bearing;
 
   @Column(name = "source")
-  public Integer source;
+  private Integer source;
 
   @Embeddable
+  @Data
   public class LastPositionId implements Serializable {
     public static final long serialVersionUID = 223765036854772327L;
+
+    public LastPositionId(String companyId, Long posId) {
+      this.companyId = companyId;
+      this.posId = posId;
+    }
+
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "posid", nullable = false)
-    public Long posId;
+    private Long posId;
   }
 }

@@ -1,5 +1,7 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,54 +13,63 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
+@Data
 @Entity
 @Table(name = "driveractionhistory")
 public class DriverActionHistory {
 
   @Id
   @Embedded
-  public DriverActionHistoryId driverActionHistoryId;
+  private DriverActionHistoryId driverActionHistoryId;
 
   @Column(name = "vehicleid", nullable = false)
-  public Integer vehicleId;
+  private Integer vehicleId;
 
   @Column(name = "driverid", nullable = false, length = 20)
-  public String driverId;
+  private String driverId;
 
   @Column(name = "category", nullable = false, length = 20)
-  public String category;
+  private String category;
 
   @Column(name = "actiontype", nullable = false, length = 20)
-  public String actionType;
+  private String actionType;
 
   @Column(name = "actiondate", nullable = false)
-  public LocalDate actionDate;
+  private LocalDate actionDate;
 
   @Column(name = "actiontime", nullable = false)
-  public LocalTime actionTime;
+  private LocalTime actionTime;
 
   @Column(name = "mileage")
-  public Integer mileage;
+  private Integer mileage;
 
   @Column(name = "oilcompany", length = 100)
-  public String oilCompany;
+  private String oilCompany;
 
   @Column(name = "literprice")
-  public Double literPrice;
+  private Double literPrice;
 
   @Column(name = "refillliter")
-  public Double refillLiter;
+  private Double refillLiter;
 
   @Column(name = "remarks")
-  public String remarks;
+  private String remarks;
 
   @Embeddable
-  public class DriverActionHistoryId implements Serializable {
-    public static final long serialVersionUID = 129387123192739L;
+  @Data
+  public static class DriverActionHistoryId implements Serializable {
+    public DriverActionHistoryId(String companyId, Long logId) {
+      this.companyId = companyId;
+      this.logId = logId;
+    }
+
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "logid", nullable = false)
-    public Long logId;
+    private Long logId;
   }
 }

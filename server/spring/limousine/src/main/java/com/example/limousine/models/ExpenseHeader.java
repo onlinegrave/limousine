@@ -1,7 +1,10 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,55 +13,65 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "expenseheader")
+@Data
 public class ExpenseHeader {
 
   @Id
   @Embedded
-  public ExpenseHeaderId expenseHeaderId;
+  private ExpenseHeaderId expenseHeaderId;
 
   @Column(name = "expensedate", nullable = false)
-  public LocalDateTime expenseDate;
+  private Date expenseDate;
 
   @Column(name = "orderid")
-  public Long orderId;
+  private Long orderId;
 
   @Column(name = "driverid", length = 20)
-  public String driverId;
+  private String driverId;
 
   @Column(name = "vehicleid")
-  public Integer vehicleId;
+  private Integer vehicleId;
 
   @Column(name = "expensetype", nullable = false)
-  public Integer expenseType;
+  private Integer expenseType;
 
   @Column(name = "description", nullable = false, length = 100)
-  public String description;
+  private String description;
 
   @Column(name = "expenseamount", nullable = false)
-  public Double expenseAmount;
+  private Double expenseAmount;
 
   @Column(name = "remarks", length = 1000)
-  public String remarks;
+  private String remarks;
 
   @Column(name = "status", nullable = false)
-  public Integer status;
+  private Integer status;
 
   @Column(name = "updatedby", length = 20)
-  public String updatedBy;
+  private String updatedBy;
 
   @Column(name = "updateddate")
-  public LocalDateTime updatedDate;
+  private Date updatedDate;
 
   @Embeddable
-  public class ExpenseHeaderId implements Serializable {
-    public static final long serialVersionUID = 223372036854772327L;
+  @Data
+  public static class ExpenseHeaderId implements Serializable {
+
+    public ExpenseHeaderId(String companyId, Long expenseId) {
+      this.companyId = companyId;
+      this.expenseId = expenseId;
+    }
+
     @Column(name = "companyid", nullable = false)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "expenseid", nullable = false)
-    public Long expenseId;
+    private Long expenseId;
   }
 
 }

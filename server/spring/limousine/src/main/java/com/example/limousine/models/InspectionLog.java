@@ -1,8 +1,11 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,51 +14,66 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "inspectionlog")
+@Data
 public class InspectionLog {
   @Id
   @Embedded
-  public InspectionLogId inspectionLogId;
+  private InspectionLogId inspectionLogId;
 
-  @Column(name = "inspectiontime", nullable = false)
-  public LocalTime inspectionTime;
+  @Column(name = "inspectiontime", nullable = false, columnDefinition = "TIME")
+  private Date inspectionTime;
   @Column(name = "mileage")
-  public Integer mileage;
+  private Integer mileage;
 
   @Column(name = "vehiclebody")
-  public Integer vehicelBody;
+  private Integer vehicelBody;
   @Column(name = "windscreenwiper")
-  public Integer windscreenWiper;
+  private Integer windscreenWiper;
   @Column(name = "seatbelt")
-  public Integer seatBelt;
+  private Integer seatBelt;
   @Column(name = "tankwater")
-  public Integer tankwater;
+  private Integer tankwater;
   @Column(name = "engineoil")
-  public Integer engineOil;
+  private Integer engineOil;
   @Column(name = "tirepressure")
-  public Integer tirePressure;
+  private Integer tirePressure;
 
   @Column(name = "lighting")
-  public Integer lighting;
+  private Integer lighting;
 
   @Column(name = "dashboard")
-  public Integer dashboard;
+  private Integer dashboard;
 
   @Column(name = "steeringwheel")
-  public Integer steeringWheel;
+  private Integer steeringWheel;
 
   @Column(name = "aircondition")
-  public Integer airCondition;
+  private Integer airCondition;
 
   @Column(name = "cardoor")
-  public Integer carDoor;
+  private Integer carDoor;
 
   @Embeddable
-  public class InspectionLogId implements Serializable {
+  @Data
+  public static class InspectionLogId implements Serializable {
     public static final long serialVersionUID = 223372036854779877L;
+
+    public InspectionLogId(String companyId, String driverId, Integer vehicleId, Integer inspectionType, Date inspectionDate) {
+      this.companyId = companyId;
+      this.driverId = driverId;
+      this.vehicleId = vehicleId;
+      this.inspectionType = inspectionType;
+      this.inspectionDate = inspectionDate;
+    }
+
+
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
     @Column(name = "driverid", nullable = false, length = 20)
     public String driverId;
     @Column(name = "vehicleid", nullable = false)
@@ -63,7 +81,7 @@ public class InspectionLog {
     @Column(name = "inspectiontype", nullable = false)
     public Integer inspectionType;
     @Column(name = "inspectiondate", nullable = false)
-    public LocalDate inspectionDate;
+    public Date inspectionDate;
   }
 
 }

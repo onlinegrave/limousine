@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.limousine.services.AppUserDetailService;
+import com.example.limousine.services.UserDetailServiceImpl;
 import com.example.limousine.utils.JwtUtil;
 
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
   private static final Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
-
+  private static final String AUTH_BEARER_START = "Bearer ";
   @Autowired
-  private AppUserDetailService appUserDetailService;
+  private UserDetailServiceImpl userDetailServiceImpl;
 
   @Autowired
   private JwtUtil jwtUtil;
@@ -33,17 +33,17 @@ public class JwtFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-    LOGGER.info(String.format("Starting a transaction for req : {%s}", request.getRequestURI()));
+    LOGGER.info(String.format("Started jwt check : {%s}", request.getRequestURI()));
     final String authorizationHeader = request.getHeader("Authorization");
 
     String username = null;
     String jwt = null;
-    if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+    if (authorizationHeader != null && authorizationHeader.startsWith(AUTH_BEARER_START)) {
       jwt = authorizationHeader.substring(7);
       username = jwtUtil.extractUsername(jwt);
     }
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.appUserDetailService.loadUserByUsername(username);
+      UserDetails userDetails = this.userDetailServiceImpl.loadUserByUsername(username);
       if (jwtUtil.validateToken(jwt, userDetails)) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
             userDetails, null, userDetails.getAuthorities());
@@ -54,6 +54,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     filterChain.doFilter(request, response);
 
-    LOGGER.info(String.format("Committing a transaction for req : {%s}", request.getRequestURI()));
+    LOGGER.info(String.format("Ending jwt check : {%s}", request.getRequestURI()));
   }
 }

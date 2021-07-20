@@ -1,6 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from './../../../api/app-client'
 import {
+  CAlert,
   CButton,
   CCard,
   CCardBody,
@@ -15,10 +18,51 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const Login = () => {
+const Login = (props) => {
+  const [companyId, setCompanyId] = useState('')
+  const [userId, setUserId] = useState('')
+  const [password, setPassword] = useState('')
+  const history = useHistory()
+  const [error, setError] = useState(false)
+  const dispatch = useDispatch()
+
+  const onCompanyIdChange = (event) => {
+    setCompanyId(event.target.value)
+  }
+
+  const onPasswordChange = (event) => {
+    setPassword(event.target.value)
+  }
+
+  const onUserIdChange = (event) => {
+    setUserId(event.target.value)
+  }
+
+  const onSubmit = async (event) => {
+    try {
+      setError(false)
+      event.preventDefault()
+      const response = await login({ companyId, userId, password })
+      console.log(response)
+      if (!response.data || !response.data.token) {
+        setError(true)
+        return
+      }
+
+      localStorage.setItem('auth-token', response.data.token)
+      dispatch({ type: 'set', user: { authToken: response.data.token } })
+      history.replace('/users')
+    } catch (e) {
+      setError(true)
+    }
+  }
+
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
+        <CRow className="justify-content-center">
+          {error ? <CAlert color="danger">Invalid credentials</CAlert> : null}
+        </CRow>
         <CRow className="justify-content-center">
           <CCol md="8">
             <CCardGroup>
@@ -31,13 +75,25 @@ const Login = () => {
                       <CInputGroupText>
                         <CIcon name="cil-building" />
                       </CInputGroupText>
-                      <CFormControl placeholder="Company Id" autoComplete="username" />
+                      <CFormControl
+                        placeholder="Company Id"
+                        autoComplete="username"
+                        required
+                        value={companyId}
+                        onChange={onCompanyIdChange}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon name="cil-user" />
                       </CInputGroupText>
-                      <CFormControl placeholder="User Id" autoComplete="username" />
+                      <CFormControl
+                        placeholder="User Id"
+                        autoComplete="username"
+                        required
+                        value={userId}
+                        onChange={onUserIdChange}
+                      />
                     </CInputGroup>
 
                     <CInputGroup className="mb-4">
@@ -45,14 +101,17 @@ const Login = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                       <CFormControl
+                        id="password"
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={onPasswordChange}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4">
+                        <CButton color="primary" className="px-4" onClick={onSubmit}>
                           Login
                         </CButton>
                       </CCol>

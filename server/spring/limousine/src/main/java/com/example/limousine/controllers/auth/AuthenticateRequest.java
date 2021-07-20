@@ -1,5 +1,8 @@
 package com.example.limousine.controllers.auth;
 
+/**
+ * @author dambarpun
+ */
 public class AuthenticateRequest {
 
   private String username;

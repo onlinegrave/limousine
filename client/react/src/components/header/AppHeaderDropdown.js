@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import {
   CAvatar,
   CBadge,
@@ -8,10 +9,13 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
+  CForm,
+  CButton,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 const AppHeaderDropdown = () => {
+  const dispatch = useDispatch()
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -74,6 +78,19 @@ const AppHeaderDropdown = () => {
         <CDropdownItem href="#">
           <CIcon name="cil-lock-locked" className="me-2" />
           Lock Account
+        </CDropdownItem>
+        <CDropdownItem>
+          <CIcon name="cil-lock-locked" className="me-2" />
+          <CButton
+            color="primary"
+            type="submit"
+            onClick={() => {
+              localStorage.removeItem('auth-token')
+              dispatch({ type: 'set', user: null })
+            }}
+          >
+            Log out
+          </CButton>
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

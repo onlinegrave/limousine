@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserHeaderRepository extends JpaRepository<UserHeader, UserHeaderId> {
 
   Optional<UserHeader> findByUserHeaderIdUserId(String userid);
+  Optional<UserHeader> findByUserHeaderIdCompanyId(String companyId);
+  Optional<UserHeader> findByUserHeaderIdCompanyIdAndUserHeaderIdUserId(String companyId,String userid);
 
   Optional<UserHeader> findByUserHeaderIdUserIdAndPassword(String userid, String password);
 

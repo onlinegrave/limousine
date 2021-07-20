@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import React, { Component, useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
+
 import './scss/style.scss'
 
 const loading = (
@@ -19,40 +21,45 @@ const Register = React.lazy(() => import('./views/pages/register/Register'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 
-class App extends Component {
-  render() {
-    return (
-      <HashRouter>
-        <React.Suspense fallback={loading}>
-          <Switch>
-            <Route exact path="/login" name="Login Page" render={(props) => <Login {...props} />} />
-            <Route
-              exact
-              path="/forgot-password"
-              name="Forgot Password Page"
-              render={(props) => <ForgotPassword {...props} />}
-            />
-            <Route
-              exact
-              path="/reset-password"
-              name="Reset Password Page"
-              render={(props) => <ResetPassword {...props} />}
-            />
+const App = () => {
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user)
 
-            <Route
-              exact
-              path="/register"
-              name="Register Page"
-              render={(props) => <Register {...props} />}
-            />
-            <Route exact path="/404" name="Page 404" render={(props) => <Page404 {...props} />} />
-            <Route exact path="/500" name="Page 500" render={(props) => <Page500 {...props} />} />
+  return (
+    <HashRouter>
+      <React.Suspense fallback={loading}>
+        <Switch>
+          <Route exact path="/login" name="Login Page" render={(props) => <Login {...props} />} />
+          <Route
+            exact
+            path="/forgot-password"
+            name="Forgot Password Page"
+            render={(props) => <ForgotPassword {...props} />}
+          />
+          <Route
+            exact
+            path="/reset-password"
+            name="Reset Password Page"
+            render={(props) => <ResetPassword {...props} />}
+          />
+
+          <Route
+            exact
+            path="/register"
+            name="Register Page"
+            render={(props) => <Register {...props} />}
+          />
+          <Route exact path="/404" name="Page 404" render={(props) => <Page404 {...props} />} />
+          <Route exact path="/500" name="Page 500" render={(props) => <Page500 {...props} />} />
+          {user ? (
             <Route path="/" name="Home" render={(props) => <DefaultLayout {...props} />} />
-          </Switch>
-        </React.Suspense>
-      </HashRouter>
-    )
-  }
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Switch>
+      </React.Suspense>
+    </HashRouter>
+  )
 }
 
 export default App

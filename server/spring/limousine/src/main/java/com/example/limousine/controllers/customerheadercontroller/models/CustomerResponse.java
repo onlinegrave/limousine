@@ -1,11 +1,14 @@
 package com.example.limousine.controllers.customerheadercontroller.models;
 
+/**
+ * @author dambarpun
+ */
 public class CustomerResponse {
-  public String companyId;
-  public String customerId;
-  public String customerName;
-  public String contactPerson;
-  public String contactTel1;
-  public String remarks;
-  public String status;
+  private String companyId;
+  private String customerId;
+  private String customerName;
+  private String contactPerson;
+  private String contactTel1;
+  private String remarks;
+  private String status;
 }

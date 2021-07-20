@@ -1,39 +1,47 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "usergroup")
+@Data
 public class UserGroup {
 
   @EmbeddedId
-  public UserGroupId userGroupId;
+  private UserGroupId userGroupId;
 
   @Column(name = "usertype", nullable = false)
-  public Integer userType;
+  private Integer userType;
 
   @Column(name = "remarks", nullable = false, length = 500)
-  public String remarks;
+  private String remarks;
 
   @Column(name = "status", nullable = false)
-  public Integer status;
+  private Integer status;
 
   @Column(name = "updatedby")
-  public String updatedBy;
+  private String updatedBy;
 
   @Column(name = "updateddate")
-  public LocalDateTime updatedDate;
+  private Date updatedDate;
 
   @Embeddable
+  @Data
   public static class UserGroupId implements Serializable {
     public UserGroupId() {
     }
@@ -44,9 +52,9 @@ public class UserGroup {
     }
 
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "groupid", nullable = false, length = 20)
-    public String groupId;
+    private String groupId;
   }
 }

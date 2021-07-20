@@ -1,5 +1,7 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -9,42 +11,47 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author dambarpun
+ */
 @Entity
 @Table(name = "ordercontact")
+@Data
 public class OrderContact {
   @Id
   @Embedded
-  public OrderContactId orderContactId;
+  private OrderContactId orderContactId;
 
   @Column(name = "contactname", nullable = false, length = 100)
-  public String contactName;
+  private String contactName;
 
   @Column(name = "contacttel1", nullable = false, length = 20)
-  public String contactTel1;
+  private String contactTel1;
 
   @Column(name = "contacttel2", nullable = false, length = 20)
-  public String contactTel2;
+  private String contactTel2;
 
   @Column(name = "contactemail", nullable = false, length = 50)
-  public String contactEmail;
+  private String contactEmail;
 
   @Column(name = "ispassenger", nullable = false)
-  public Integer isPassenger;
+  private Integer isPassenger;
 
   @Embeddable
-  public class OrderContactId implements Serializable {
-    public static final long serialVersionUID = 223372036854775807L;
+  @Data
+  public static class OrderContactId implements Serializable {
+
     @Column(name = "companyid", nullable = false, length = 20)
-    public String companyId;
+    private String companyId;
 
     @Column(name = "orderid", nullable = false)
-    public Long orderId;
+    private Long orderId;
 
     @Column(name = "version", nullable = false)
-    public Integer version;
+    private Integer version;
 
     @Column(name = "seqno", nullable = false)
-    public Integer seqNo;
+    private Integer seqNo;
   }
 
 }

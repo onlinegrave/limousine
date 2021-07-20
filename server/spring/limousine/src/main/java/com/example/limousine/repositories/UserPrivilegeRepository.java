@@ -5,6 +5,18 @@ import com.example.limousine.models.UserPrivilege.UserPrivilegeId;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserPrivilegeRepository extends JpaRepository<UserPrivilege, UserPrivilegeId> {
+import java.util.Optional;
 
+/**
+ * @author dambarpun
+ */
+public interface UserPrivilegeRepository extends JpaRepository<UserPrivilege, UserPrivilegeId> {
+  /**
+   * Find user privilege.
+   * @param companyId
+   * @param groupId
+   * @param screenId
+   * @return UserPrivilege
+   */
+  Optional<UserPrivilege> findByUserPrivilegeIdCompanyIdAndUserPrivilegeIdGroupIdAndUserPrivilegeIdScreenId(String companyId, String groupId, String screenId);
 }

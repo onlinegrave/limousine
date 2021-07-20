@@ -1,18 +1,25 @@
 package com.example.limousine.models;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 
+/**
+ * @author dambarpun
+ */
 @Entity
+@Data
 @Table(name = "devicerequest")
 public class DeviceRequest {
 
@@ -32,14 +39,15 @@ public class DeviceRequest {
   public String actionKey;
 
   @Column(name = "receivetime", nullable = false)
-  public LocalDateTime receiveTime;
+  public Date receiveTime;
 
   @Column(name = "buffertime", columnDefinition = "TIMESTAMP")
-  public LocalDateTime bufferTime;
+  public Date bufferTime;
 
   @Embeddable
-  public class DeviceRequestId implements Serializable {
-    public static final long serialVersionUID = 298999036854772327L;
+  @Data
+  public static class DeviceRequestId implements Serializable {
+
     @Column(name = "companyid")
     public String companyId;
 

@@ -5,6 +5,10 @@ import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +23,7 @@ import ch.qos.logback.core.joran.action.Action;
 import lombok.NonNull;
 
 import java.io.StringBufferInputStream;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +38,9 @@ import com.example.limousine.models.CustomerHeader.CustomerHeaderId;
 import com.example.limousine.repositories.CustomerHeaderRespository;
 import com.google.gson.Gson;
 
+/**
+ * @author dambarpun
+ */
 @RestController
 public class CustomerHeaderController {
 
@@ -52,12 +59,12 @@ public class CustomerHeaderController {
   @Autowired
   private CustomerHeaderRespository customerHeaderRepository;
 
-  @GetMapping(value = "customerheaders", params = { "page", "size", "orderBy" })
-  public ResponseEntity<ApiResponse<List<CustomerHeader>>> all(@RequestParam("page") int page,
-      @RequestParam("size") int size, @RequestParam("orderBy") String orderby) {
-        Pageable pageable = PageRequest.of(page, size, direction, properties)
-    return ResponseEntity.ok()
-        .body(new ApiResponse.Builder<List<CustomerHeader>>().withData(customerHeaderRepository.findAll(pageable)).build());
+  @GetMapping(value = "customerheaders", params = { "page", "size", "orderBy", "order" })
+  public ResponseEntity<ApiResponse<Page<CustomerHeader>>> all(@RequestParam("page") int page,
+                                                               @RequestParam("size") int size, @RequestParam("order") String order, @RequestParam("orderBy") String... orderBy) {
+    return ResponseEntity.ok().body(new ApiResponse.Builder<Page<CustomerHeader>>().withData(
+        customerHeaderRepository.findAll(PageRequest.of(page, size, Direction.fromString(order), orderBy)))
+        .build());
   }
 
   @GetMapping(value = "customerheaders/{customerId}")
@@ -99,7 +106,7 @@ public class CustomerHeaderController {
     // modelMapper.map(customerHeaderDto, CustomerHeaderCreateDTO.class);
     final CustomerHeader customerHeader = new CustomerHeader();
     return ResponseEntity.ok().body(new ApiResponse.Builder<CustomerHeader>().withData(customerHeader).build());
-    // customerHeader.updatedDate = LocalDateTime.now();
+    // customerHeader.updatedDate = Date.now();
 
     // Optional<CustomerHeader> optCustomerHeader = customerHeaderRepository
     // .findById(customerHeader.getCustomerHeaderId());

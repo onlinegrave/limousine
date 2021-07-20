@@ -1,5 +1,8 @@
 package com.example.limousine.controllers.exception;
 
+/**
+ * @author dambarpun
+ */
 public class ControllerException extends Exception {
   public ControllerException() {
     super("Controller exception");
